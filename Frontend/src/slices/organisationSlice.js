@@ -40,6 +40,6 @@ export const fetchOrganisation = () => async (dispatch) => {
     dispatch(setLoading(false));
   }
 };
-
+console.log(process.env.NODE_ENV);
 export const getOrganisation = (state) => state.organisation.organisation;
 export default organisationSlice.reducer;

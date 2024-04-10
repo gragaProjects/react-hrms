@@ -25,11 +25,12 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const PORT = 4000 || process.env.PORT
 
-
+console.log(process.env.NODE_ENV);
 app.get("/", (req, res) => {
     res.send("server was started")
 })
 
 app.listen(PORT, () => {
     console.log(`server is up and running on ${PORT} PORT`)
+   
 })
