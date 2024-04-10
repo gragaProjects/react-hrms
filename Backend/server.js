@@ -9,15 +9,13 @@ const app = express()
 connectDB()
 
 app.use(express.json())
-//app.use(cors())
-app.use(cors({
-    origin: process.env.FRONTEND_URL, // Allow requests from this specific origin
-    credentials: true
-}));
+app.use(cors())
+// app.use(cors({
+//     origin: process.env.FRONTEND_URL, // Allow requests from this specific origin
+//     credentials: true
+// }));
 //console.log(process.env.FRONTEND_URL);
-// mongoose.connect('mongodb+srv://balusiva1299:Siva2312@cluster0.avjoegu.mongodb.net/UserLogin?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
-// const db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 
 app.use("/api", apiRouter)
 
