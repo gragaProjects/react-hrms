@@ -31,6 +31,7 @@ export const { setOrganisation, setLoading, setError } = organisationSlice.actio
 export const fetchOrganisation = () => async (dispatch) => {
   dispatch(setLoading(true)); // Here setLoading is used correctly
   try {
+    console.log(axios.baseURL);
     const response = await axios.get('/organisations/'); // Adjust the URL
     const data = await response.data; // Assuming response is JSON data
     dispatch(setOrganisation(data));
