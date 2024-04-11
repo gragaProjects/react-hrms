@@ -12,15 +12,15 @@ const organisationSlice = createSlice({
   initialState,
   reducers: {
     setOrganisation(state, action) {
-      console.log("Received organisation data:", action.payload);
+    //  console.log("Received organisation data:", action.payload);
       state.organisation = action.payload;
     },
     setLoading(state, action) {
-      console.log("Setting loading state to:", action.payload);
+      //console.log("Setting loading state to:", action.payload);
       state.loading = action.payload;
     },
     setError(state, action) {
-      console.log("Setting error:", action.payload);
+     // console.log("Setting error:", action.payload);
       state.error = action.payload;
     },
   },
@@ -41,6 +41,6 @@ export const fetchOrganisation = () => async (dispatch) => {
     dispatch(setLoading(false));
   }
 };
-console.log(process.env.NODE_ENV);//
+//console.log(process.env.NODE_ENV);//
 export const getOrganisation = (state) => state.organisation.organisation;
 export default organisationSlice.reducer;
