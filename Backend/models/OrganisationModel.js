@@ -13,10 +13,30 @@ const organisationSchema = new mongoose.Schema({
     currency: String,
     symbol: String,
     address: String,
-    country: String,
-    state: String,
-    district: String,
-    city: String,
+    // country: String,
+    // state: String,
+    // district: String,
+    // city: String,
+    country: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Country',
+        required: true
+      },
+      state: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'State',
+        required: true
+      },
+      district: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'District',
+        required: true
+      },
+      city: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'City',
+        required: true
+      },
     zipCode: String,
     logo: String
 });

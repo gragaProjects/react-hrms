@@ -38,6 +38,7 @@ router.get('/', async (req, res) => {
     try {
        // const organisations = await Organisation.find();
         const organisation = await Organisation.findOne().sort({ _id: 1 })
+        //.populate('country', 'countryName').populate('district', 'districtName').populate('state', 'stateName').populate('city', 'cityName')
         res.json(organisation);
     } catch (error) {
         res.status(500).json({ message: error.message });

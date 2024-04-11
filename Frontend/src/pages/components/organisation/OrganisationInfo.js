@@ -33,7 +33,8 @@ import {
 
   import { toast ,ToastContainer,Bounce  } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
-  
+  import SelectSearch from 'react-select-search';
+  import 'react-select-search/style.css'
   //
   import axios from "../../../axios";
 const OrganisationInfo = () => {
@@ -128,7 +129,7 @@ const OrganisationInfo = () => {
             const response = await axios.get('/organisations');
             setOrganisationData(response.data);
             setOrganisationId(response.data?._id)
-            console.log(response.data);
+           // console.log(response.data);
         } catch (error) {
             console.error('Error fetching organisations:', error);
         }
@@ -160,7 +161,7 @@ const OrganisationInfo = () => {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            console.log('Organisation added:', response.data);
+          //  console.log('Organisation added:', response.data);
             toast.success('Organisation added successfully', {
               position: "top-right",
               autoClose: 3000,
@@ -348,14 +349,14 @@ const OrganisationInfo = () => {
           <Block size="lg">
           <BlockHead>
             <BlockHeadContent>
-              <BlockTitle tag="h5">Organisation Info</BlockTitle>
+              {/* <BlockTitle tag="h5">Organisation Info</BlockTitle> */}
               
             </BlockHeadContent>
           </BlockHead>
           <PreviewCard>
             <OverlineTitle tag="span" className="preview-title-lg">
               {" "}
-              Default Preview{" "}
+               {" "}
             </OverlineTitle>
            
            <Row className="gy-4">
@@ -486,9 +487,9 @@ const OrganisationInfo = () => {
                 <Label htmlFor="country" className="form-label">
                   Country
                 </Label>
-                <div className="form-control-wrap">
+                <div className="form-control-wrap" >
                   {/* Assuming 'countries' is an array of country names */}
-                  <Input type="select" name="country" id="country"  value={organisationData?.country} onChange={ (e) => {
+                  {/* <Input type="select" name="country" id="country"  value={organisationData?.country} onChange={ (e) => {
                            handleInputChange(e);
                            fetchStatesByCountry(e.target.value);
                           }}
@@ -496,7 +497,42 @@ const OrganisationInfo = () => {
                             {countryOptions.map(country => (
                             <option key={country._id} value={country._id}>{country.countryName}</option>
                           ))}
-                  </Input>
+                  </Input> */}
+
+                  <SelectSearch sm="4" 
+                    name="country"
+                    id="country"
+                    value={organisationData?.country || ''} // Set default value here
+                    onChange={(newValue) => {
+                      handleInputChange({ target: { name: 'country', value: newValue } });
+                      fetchStatesByCountry(newValue);
+                    }}
+                    options={countryOptions.map(country => ({ name: country.countryName, value: country._id }))}
+                    placeholder="Select Country"
+                    search
+                    style={{ width: '100%' }} 
+                  />
+                      {/* <Select
+                        name="country"
+                        id="country"
+                        value={organisationData?.country ? { value: organisationData.country._id } : null}
+                        onChange={(selectedOption) => {
+                          const selectedCountryId = selectedOption ? selectedOption.value : ''; // Extract the _id
+                          handleInputChange({ target: { name: 'country', value: selectedCountryId } }); // Pass only the _id
+                          fetchStatesByCountry(selectedCountryId); // Also pass only the _id to fetchStatesByCountry
+                        }}
+                        options={countryOptions.map(country => ({
+                          value: country._id,
+                          label: country.countryName
+                        }))}
+                        placeholder="Select Country"
+                        isSearchable={true}
+                        isClearable={true}
+                      /> */}
+      
+
+
+
                 </div>
               </div>
             </Col>
@@ -507,7 +543,7 @@ const OrganisationInfo = () => {
                 </Label>
                 <div className="form-control-wrap">
                   {/* Assuming 'states' is an array of state names */}
-                  <Input type="select" name="state" id="state" value={organisationData?.state} onChange={ (e) => {
+                  {/* <Input type="select" name="state" id="state" value={organisationData?.state} onChange={ (e) => {
                            handleInputChange(e);
                             fetchDistrictsByState(e.target.value);
                           }}
@@ -515,7 +551,19 @@ const OrganisationInfo = () => {
                           {stateOptions.map(state => (
                             <option key={state._id} value={state._id}>{state.stateName}</option>
                           ))}
-                  </Input>
+                  </Input> */}
+                    <SelectSearch
+                    name="state"
+                    id="state"
+                    value={organisationData?.state || ''}
+                    onChange={(newValue) => {
+                      handleInputChange({ target: { name: 'state', value: newValue } });
+                      fetchDistrictsByState(newValue);
+                    }}
+                    options={stateOptions.map(state => ({ name: state.stateName, value: state._id }))}
+                    placeholder="Select State"
+                    search
+                  />
                 </div>
               </div>
             </Col>
@@ -526,7 +574,7 @@ const OrganisationInfo = () => {
                 </Label>
                 <div className="form-control-wrap">
                   {/* Assuming 'districts' is an array of district names */}
-                  <Input type="select"  id="district" name="district" value={organisationData?.district}
+                  {/* <Input type="select"  id="district" name="district" value={organisationData?.district}
                   // onChange={handleInputChange}
                   onChange={ (e) => {
                     handleInputChange(e);
@@ -536,7 +584,19 @@ const OrganisationInfo = () => {
                      {districtOptions.map(district => (
                             <option key={district._id} value={district._id}>{district.districtName}</option>
                           ))}
-                  </Input>
+                  </Input> */}
+                   <SelectSearch
+                    name="district"
+                    id="district"
+                    value={organisationData?.district || ''}
+                    onChange={(newValue) => {
+                      handleInputChange({ target: { name: 'district', value: newValue } });
+                      fetchCitiesByDistrict(newValue);
+                    }}
+                    options={districtOptions.map(district => ({ name: district.districtName, value: district._id }))}
+                    placeholder="Select District"
+                    search
+                  />
                 </div>
               </div>
             </Col>
@@ -547,13 +607,22 @@ const OrganisationInfo = () => {
                 </Label>
                 <div className="form-control-wrap">
                   {/* Assuming 'cities' is an array of city names */}
-                  <Input type="select" name="city" value={organisationData?.city} onChange={handleInputChange}
+                  {/* <Input type="select" name="city" value={organisationData?.city} onChange={handleInputChange}
  id="city">
   <option value="">Select City</option>
   {cityOptions.map(city => (
                             <option key={city._id} value={city._id}>{city.cityName}</option>
                           ))}
-                  </Input>
+                  </Input> */}
+                   <SelectSearch
+                    name="city"
+                    id="city"
+                    value={organisationData?.city || ''}
+                    onChange={handleInputChange}
+                    options={cityOptions.map(city => ({ name: city.cityName, value: city._id }))}
+                    placeholder="Select City"
+                    search
+                  />
                 </div>
               </div>
             </Col>

@@ -15,7 +15,7 @@ const User = ({}) => {
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen((prevState) => !prevState);
    
-   console.log(user);
+   //console.log(user);
   
   //Logout
   const dispatch = useDispatch();

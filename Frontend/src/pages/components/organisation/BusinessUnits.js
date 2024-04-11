@@ -131,6 +131,8 @@ const BusinessUnits = () => {
         });
   
         setView({ ...view, add: false });
+          // Refresh the page
+       window.location.reload();
       } else {
         console.log('Form validation failed');
       }
@@ -146,19 +148,42 @@ const BusinessUnits = () => {
 
   // ---------------Edit  Data--------------------
 
-   const onEditClick = (cellData) => {
+  //  const onEditClick = (cellData) => {
+  //   resetForm();
+  //   // Fetch the data for the cellData from dataTableData and set it to the formData state
+  //   const editedData = dataTableData.find(item => item._id === cellData);
+  //   //console.log(editedData);
+  //   setFormData(editedData);
+    
+  //   setView({ ...view, edit: true });
+  // };
+  const onEditClick = (cellData) => {
     resetForm();
-    // Fetch the data for the cellData from dataTableData and set it to the formData state
-    const editedData = dataTableData.find(item => item._id === cellData);
-    //console.log(editedData);
-    setFormData(editedData);
-    setView({ ...view, edit: true });
+    try {
+      // Fetch the data for the cellData from dataTableData and set it to the formData state
+      const editedData = dataTableData.find(item => item._id === cellData);
+    //  console.log(editedData);
+      setFormData({
+        ...editedData,
+        // Set district and city directly from the edited data
+        timeZone: editedData.timeZone ? editedData.timeZone._id : '',
+        country: editedData.country ? editedData.country._id : '',
+        state: editedData.state ? editedData.state._id : '',
+        district: editedData.district ? editedData.district._id : '',
+        city: editedData.city ? editedData.city._id : ''
+      });
+      setView({ ...view, edit: true });
+    } catch (error) {
+      console.error('Error editing business unit:', error);
+    }
   };
 
   // Function to handle updating existing data
   const handleUpdate = async () => {
     try {
-      const response = await axios.put(`/businessunit/update/${formData._id}`, formData);
+      const isValid = await trigger(); // Trigger form validation
+      if (isValid) {
+     const response = await axios.put(`/businessunit/update/${formData._id}`, formData);
             // Update the dataTableData state with the updated department data
     setDataTableData(dataTableData.map(item => {
       if (item._id === formData._id) {
@@ -187,6 +212,10 @@ const BusinessUnits = () => {
 
        // Close the modal after successful update
         setView({ ...view, edit: false });
+        // Refresh the page
+       window.location.reload();
+    }
+
     } catch (error) {
       console.error('Error updating business unit:', error);
       // Show error message to the user
@@ -373,7 +402,7 @@ const BusinessUnits = () => {
     "form-validate": true,
     //"is-alter": alter,
   });
-  console.log(errors);
+  //console.log(errors);
 
   //--------Search box filter Data---------///
   useEffect(() => {
@@ -690,12 +719,12 @@ const dataForCurrentPage = dataTableData.slice(startIndex, endIndex);
               <Col md="4">
                 <div className="form-group">
                   <label className="form-label" htmlFor="time-zone">
-                    Time Zone
+                    Time Zone <span  className="error">*</span>
                   </label>
                   <div className="form-control-wrap">
                   <select
                       className="form-control"
-                      {...register('timeZone')}
+                      {...register('timeZone', { required: "This field is required" })}
                       value={formData.timeZone}
                       onChange={(e) => setFormData({ ...formData, timeZone: e.target.value })}
                     >

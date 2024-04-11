@@ -1,3 +1,10 @@
 .error {
     color: red;
 }
+.select-search-container {
+    width: 100%!important;
+    --select-search-selected: #6c6f85!important;
+}
+.select-search-container:not(.select-search-is-disabled) .select-search-input:hover {
+    border-color: unset !important;
+}

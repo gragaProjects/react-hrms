@@ -116,12 +116,37 @@ const City = () => {
     }
   };
 
-  const onEditClick = (cellData) => {
+  // const onEditClick = (cellData) => {
+  //   resetForm();
+  //   const editedData = dataTableData.find(item => item._id === cellData);
+  //   setFormData(editedData);
+  //   setView({ ...view, edit: true });
+  // };
+
+
+  const onEditClick = async (cellData) => {
     resetForm();
-    const editedData = dataTableData.find(item => item._id === cellData);
-    setFormData(editedData);
-    setView({ ...view, edit: true });
+    try {
+      const editedData = dataTableData.find(item => item._id === cellData);
+      console.log("Edited Data:", editedData);
+      if (editedData && editedData.state) {
+        await fetchStatesByCountry(editedData.country._id); // Wait for state data to be fetched
+        await fetchDistrictsByState(editedData.state._id); // Wait for state data to be fetched
+        setFormData({
+          ...editedData,
+          country: editedData.country ? editedData.country._id : '',
+          state: editedData.state ? editedData.state._id : '', // Now this should work fine
+          district: editedData.district ? editedData.district._id : '',
+        });
+        setView({ ...view, edit: true });
+      } else {
+        console.error('State field is missing or invalid in edited data');
+      }
+    } catch (error) {
+      console.error('Error editing business unit:', error);
+    }
   };
+  
 
   const handleUpdate = async () => {
     try {

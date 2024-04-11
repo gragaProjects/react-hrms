@@ -51,7 +51,7 @@ export default userSlice.reducer
 
 export const handleLogin = (token) => async (dispatch) => {
     try {
-      console.log("User data :", token);
+     
       const response = await axios.get("/user/data", {
         headers: {
           Authorization: token
