@@ -236,7 +236,7 @@ const menu = [
           },
           {
             text: "Government ID",
-            link: "/government-id",
+            link: "/governmentid",
           },
           {
             text: "Currency",

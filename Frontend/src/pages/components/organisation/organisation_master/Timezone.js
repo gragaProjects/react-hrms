@@ -64,6 +64,7 @@ const TimeZone = () => {
       const isValid = await trigger();
       if (isValid) {
         const response = await axios.post('/timezone/add', formData);
+        resetForm();
         setDataTableData([...dataTableData, response.data]);
         toast.success('Added successfully', { position: "top-right" });
         setView({ ...view, add: false });

@@ -101,6 +101,7 @@ const BusinessUnits = () => {
     
       if (isValid) {
         const response = await axios.post('/businessunit/add', formData);
+        resetForm();
         setDataTableData([...dataTableData, response.data]);
         setFormData({
           name: '',

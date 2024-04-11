@@ -104,6 +104,7 @@ const City = () => {
       const isValid = await trigger();
       if (isValid) {
         const response = await axios.post('/city/add', formData);
+        resetForm();
         setDataTableData([...dataTableData, response.data]);
         toast.success('City added successfully', { position: "top-right" });
         setView({ ...view, add: false });

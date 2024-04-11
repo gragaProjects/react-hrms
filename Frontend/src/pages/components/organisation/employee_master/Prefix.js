@@ -21,13 +21,13 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import classNames from "classnames";
 
-const Designation = () => {
+const Prefix = () => {
   const [sm, updateSm] = useState(false);
   const [dataTableData, setDataTableData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredData, setFilteredData] = useState([]);
   const [formData, setFormData] = useState({
-    designationName: ''
+    prefixTitle: ''
   });
   const [view, setView] = useState({
     edit: false,
@@ -53,7 +53,7 @@ const Designation = () => {
 
   const resetForm = () => {
     setFormData({
-      designationName: ''
+      prefixTitle: ''
     });
     reset({});
   };
@@ -63,16 +63,16 @@ const Designation = () => {
     try {
       const isValid = await trigger();
       if (isValid) {
-        const response = await axios.post('/designation/add', formData);
+        const response = await axios.post('/prefix/add', formData);
         resetForm();
         setDataTableData([...dataTableData, response.data]);
-        toast.success('Designation added successfully', { position: "top-right" });
+        toast.success('Prefix added successfully', { position: "top-right" });
         setView({ ...view, add: false });
       } else {
         console.log('Form validation failed');
       }
     } catch (error) {
-      console.error('Error adding designation:', error);
+      console.error('Error adding prefix:', error);
       toast.error(error.response.data.message);
     }
   };
@@ -87,13 +87,13 @@ const Designation = () => {
 
   const handleUpdate = async () => {
     try {
-      const response = await axios.put(`/designation/update/${formData._id}`, formData);
-      toast.success('Designation updated successfully', { position: "top-right" });
+      const response = await axios.put(`/prefix/update/${formData._id}`, formData);
+      toast.success('Prefix updated successfully', { position: "top-right" });
 
-      // Update the dataTableData state with the updated designation data
+      // Update the dataTableData state with the updated prefix data
       setDataTableData(dataTableData.map(item => {
         if (item._id === formData._id) {
-          return formData; // Update the data for the edited designation
+          return formData; // Update the data for the edited prefix
         }
         return item;
       }));
@@ -102,19 +102,19 @@ const Designation = () => {
       setView({ ...view, edit: false });
 
     } catch (error) {
-      console.error('Error updating designation:', error);
-      toast.error('Error updating designation');
+      console.error('Error updating prefix:', error);
+      toast.error('Error updating prefix');
     }
   };
 
-  const deleteDesignation = async (id) => {
+  const deletePrefix = async (id) => {
     try {
-      await axios.delete(`/designation/delete/${id}`);
-      toast.success('Designation deleted successfully', { position: "top-right" });
+      await axios.delete(`/prefix/delete/${id}`);
+      toast.success('Prefix deleted successfully', { position: "top-right" });
       setDataTableData(dataTableData.filter(item => item._id !== id));
     } catch (error) {
-      console.error('Error deleting designation:', error);
-      toast.error('Error deleting designation');
+      console.error('Error deleting prefix:', error);
+      toast.error('Error deleting prefix');
     }
   };
 
@@ -130,7 +130,7 @@ const Designation = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/designation/get');
+        const response = await axios.get('/prefix/get');
         setDataTableData(response.data);
         setLoading(false);
       } catch (error) {
@@ -154,7 +154,7 @@ const Designation = () => {
         <Button className="btn-round btn-icon" color="danger" size="sm"
           onClick={(ev) => {
             ev.preventDefault();
-            deleteDesignation(cellData);
+            deletePrefix(cellData);
           }}>
           <Icon name="trash" />
         </Button>
@@ -176,8 +176,8 @@ const Designation = () => {
       width: '200px'
     },
     {
-      name: 'Designation Name',
-      selector: (row) => row.designationName,
+      name: 'Prefix Title',
+      selector: (row) => row.prefixTitle,
       sortable: true
     }
   ];
@@ -218,12 +218,12 @@ const Designation = () => {
     
   return (
     <>
-      <Head title="Designations" />
+      <Head title="Prefixes" />
       <Content>
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle>Designations</BlockTitle>
+              <BlockTitle>Prefixes</BlockTitle>
             </BlockHeadContent>
             <BlockHeadContent>
               <div className="toggle-wrap nk-block-tools-toggle">
@@ -239,7 +239,7 @@ const Designation = () => {
                     <li className="nk-block-tools-opt">
                       <Button color="primary" onClick={() => setView({ ...view, add: true })}>
                         <Icon name="plus"></Icon>
-                        <span>Add Designation</span>
+                        <span>Add Prefix</span>
                       </Button>
                     </li>
                   </ul>
@@ -297,24 +297,24 @@ const Designation = () => {
               <Icon name="cross-sm"></Icon>
             </a>
             <div className="p-2">
-              <h5 className="title">{view.edit ? 'Update' : 'Add'} Designation</h5>
+              <h5 className="title">{view.edit ? 'Update' : 'Add'} Prefix</h5>
               <div className="mt-4">
                 <Form className={formClass} onSubmit={view.edit ? handleUpdate : handleSubmit}>
                   <Row className="g-3">
                     <Col md="6">
                       <div className="form-group">
-                        <label className="form-label" htmlFor="designationName">
-                          Designation Name <span  className="error">*</span>
+                        <label className="form-label" htmlFor="prefixTitle">
+                          Prefix Title <span  className="error">*</span>
                         </label>
                         <div className="form-control-wrap">
                           <input
                             type="text"
-                            {...register('designationName', { required: "This field is required" })}
+                            {...register('prefixTitle', { required: "This field is required" })}
                             className="form-control"
-                            value={formData.designationName}
-                            onChange={(e) => setFormData({ ...formData, designationName: e.target.value })}
+                            value={formData.prefixTitle}
+                            onChange={(e) => setFormData({ ...formData, prefixTitle: e.target.value })}
                           />
-                          {errors.designationName && <span className="invalid">{errors.designationName.message}</span>}
+                          {errors.prefixTitle && <span className="invalid">{errors.prefixTitle.message}</span>}
                         </div>
                       </div>
                     </Col>
@@ -354,4 +354,4 @@ const Designation = () => {
   );
 };
 
-export default Designation;
+export default Prefix;

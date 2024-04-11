@@ -9,6 +9,16 @@ const DistrictRouter = require("./DistrictRouter")
 const CityRouter = require("./CityRouter")
 const TimeZoneRouter = require("./TimeZoneRouter")
 const DesignationRouter = require("./employee_master/DesignationRouter")
+const RoleRouter = require("./employee_master/RolesRouter")
+const PrefixRouter = require("./employee_master/PrefixRouter")
+const NationalityRouter = require("./employee_master/NationalityRouter")
+const LanguageRouter = require("./employee_master/LanguageRouter")
+const EducationRouter = require("./employee_master/EducationRouter")
+const CourseRouter = require("./employee_master/CourseRouter")
+const GovernmentidRouter = require("./employee_master/GovernmentidRouter")
+const CurrencyRouter = require("./employee_master/CurrencyRouter")
+const AllowanceRouter = require("./employee_master/AllowanceRouter")
+const DeductionRouter = require("./employee_master/DeductionRouter")
 
 
 router.use("/user", userRoute);
@@ -21,6 +31,16 @@ router.use("/district", DistrictRouter)
 router.use("/city", CityRouter)
 router.use("/timezone", TimeZoneRouter)
 router.use("/designation", DesignationRouter)
+router.use("/role", RoleRouter)
+router.use("/prefix", PrefixRouter)
+router.use("/nationality", NationalityRouter)
+router.use("/language", LanguageRouter)
+router.use("/education", EducationRouter)
+router.use("/course", CourseRouter)
+router.use("/government-id", GovernmentidRouter)
+router.use("/currency", CurrencyRouter)
+router.use("/allowance", AllowanceRouter)
+router.use("/deduction", DeductionRouter)
 
 
 

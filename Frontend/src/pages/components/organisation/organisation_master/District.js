@@ -102,6 +102,7 @@ const District = () => {
       const isValid = await trigger();
       if (isValid) {
         const response = await axios.post('/district/add', formData);
+        resetForm();
         setDataTableData([...dataTableData, response.data]);
         toast.success('District added successfully', { position: "top-right" });
         setView({ ...view, add: false });

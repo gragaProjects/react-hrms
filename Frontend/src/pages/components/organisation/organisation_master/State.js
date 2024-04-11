@@ -80,6 +80,7 @@ const State = () => {
       const isValid = await trigger();
       if (isValid) {
         const response = await axios.post('/state/add', formData);
+        resetForm();
          // Update table data after adding new state
       setDataTableData([...dataTableData, response.data]);
 

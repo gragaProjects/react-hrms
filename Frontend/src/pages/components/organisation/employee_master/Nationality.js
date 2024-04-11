@@ -21,13 +21,13 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import classNames from "classnames";
 
-const Designation = () => {
+const Nationality = () => {
   const [sm, updateSm] = useState(false);
   const [dataTableData, setDataTableData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredData, setFilteredData] = useState([]);
   const [formData, setFormData] = useState({
-    designationName: ''
+    nationalityName: ''
   });
   const [view, setView] = useState({
     edit: false,
@@ -53,7 +53,7 @@ const Designation = () => {
 
   const resetForm = () => {
     setFormData({
-      designationName: ''
+      nationalityName: ''
     });
     reset({});
   };
@@ -63,23 +63,22 @@ const Designation = () => {
     try {
       const isValid = await trigger();
       if (isValid) {
-        const response = await axios.post('/designation/add', formData);
+        const response = await axios.post('/nationality/add', formData);
         resetForm();
         setDataTableData([...dataTableData, response.data]);
-        toast.success('Designation added successfully', { position: "top-right" });
+        toast.success('Nationality added successfully', { position: "top-right" });
         setView({ ...view, add: false });
       } else {
         console.log('Form validation failed');
       }
     } catch (error) {
-      console.error('Error adding designation:', error);
+      console.error('Error adding nationality:', error);
       toast.error(error.response.data.message);
     }
   };
 
   const onEditClick = (cellData) => {
     resetForm();
-    // Fetch the data for the cellData from dataTableData and set it to the formData state
     const editedData = dataTableData.find(item => item._id === cellData);
     setFormData(editedData);
     setView({ ...view, edit: true });
@@ -87,34 +86,30 @@ const Designation = () => {
 
   const handleUpdate = async () => {
     try {
-      const response = await axios.put(`/designation/update/${formData._id}`, formData);
-      toast.success('Designation updated successfully', { position: "top-right" });
-
-      // Update the dataTableData state with the updated designation data
+      const response = await axios.put(`/nationality/update/${formData._id}`, formData);
+      toast.success('Nationality updated successfully', { position: "top-right" });
       setDataTableData(dataTableData.map(item => {
         if (item._id === formData._id) {
-          return formData; // Update the data for the edited designation
+          return formData;
         }
         return item;
       }));
-
       resetForm();
       setView({ ...view, edit: false });
-
     } catch (error) {
-      console.error('Error updating designation:', error);
-      toast.error('Error updating designation');
+      console.error('Error updating nationality:', error);
+      toast.error('Error updating nationality');
     }
   };
 
-  const deleteDesignation = async (id) => {
+  const deleteNationality = async (id) => {
     try {
-      await axios.delete(`/designation/delete/${id}`);
-      toast.success('Designation deleted successfully', { position: "top-right" });
+      await axios.delete(`/nationality/delete/${id}`);
+      toast.success('Nationality deleted successfully', { position: "top-right" });
       setDataTableData(dataTableData.filter(item => item._id !== id));
     } catch (error) {
-      console.error('Error deleting designation:', error);
-      toast.error('Error deleting designation');
+      console.error('Error deleting nationality:', error);
+      toast.error('Error deleting nationality');
     }
   };
 
@@ -130,7 +125,7 @@ const Designation = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/designation/get');
+        const response = await axios.get('/nationality/get');
         setDataTableData(response.data);
         setLoading(false);
       } catch (error) {
@@ -154,7 +149,7 @@ const Designation = () => {
         <Button className="btn-round btn-icon" color="danger" size="sm"
           onClick={(ev) => {
             ev.preventDefault();
-            deleteDesignation(cellData);
+            deleteNationality(cellData);
           }}>
           <Icon name="trash" />
         </Button>
@@ -171,13 +166,13 @@ const Designation = () => {
     },
     {
       name: 'S.No.',
-      selector:  (row, index) => startIndex + index + 1,
+      selector:  (row, index) => startIndex + index + 1,//(row, index) => index + 1,
       sortable: false,
       width: '200px'
     },
     {
-      name: 'Designation Name',
-      selector: (row) => row.designationName,
+      name: 'Nationality Name',
+      selector: (row) => row.nationalityName,
       sortable: true
     }
   ];
@@ -206,24 +201,23 @@ const Designation = () => {
     setSearchText(e.target.value);
   };
 
-  //--------------pagination-------------------
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
   
   const startIndex = (currentPage - 1) * itemPerPage;
   const endIndex = Math.min(startIndex + itemPerPage, dataTableData.length);
+  
   const dataForCurrentPage = dataTableData.slice(startIndex, endIndex);
-  //--------------pagination-------------------
-    
+
   return (
     <>
-      <Head title="Designations" />
+      <Head title="Nationalities" />
       <Content>
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle>Designations</BlockTitle>
+              <BlockTitle>Nationalities</BlockTitle>
             </BlockHeadContent>
             <BlockHeadContent>
               <div className="toggle-wrap nk-block-tools-toggle">
@@ -239,7 +233,7 @@ const Designation = () => {
                     <li className="nk-block-tools-opt">
                       <Button color="primary" onClick={() => setView({ ...view, add: true })}>
                         <Icon name="plus"></Icon>
-                        <span>Add Designation</span>
+                        <span>Add Nationality</span>
                       </Button>
                     </li>
                   </ul>
@@ -251,7 +245,7 @@ const Designation = () => {
 
         <Block size="lg">
           <PreviewCard>
-            <Col size="12">
+            <Col size="12" >
               <div className="align-end flex-wrap flex-sm-nowrap gx-4 gy-2 justify-content-end">
                 <Col md="2">
                   <input
@@ -297,24 +291,24 @@ const Designation = () => {
               <Icon name="cross-sm"></Icon>
             </a>
             <div className="p-2">
-              <h5 className="title">{view.edit ? 'Update' : 'Add'} Designation</h5>
+              <h5 className="title">{view.edit ? 'Update' : 'Add'} Nationality</h5>
               <div className="mt-4">
                 <Form className={formClass} onSubmit={view.edit ? handleUpdate : handleSubmit}>
                   <Row className="g-3">
                     <Col md="6">
                       <div className="form-group">
-                        <label className="form-label" htmlFor="designationName">
-                          Designation Name <span  className="error">*</span>
+                        <label className="form-label" htmlFor="nationalityName">
+                          Nationality Name <span className="error">*</span>
                         </label>
                         <div className="form-control-wrap">
                           <input
                             type="text"
-                            {...register('designationName', { required: "This field is required" })}
+                            {...register('nationalityName', { required: "This field is required" })}
                             className="form-control"
-                            value={formData.designationName}
-                            onChange={(e) => setFormData({ ...formData, designationName: e.target.value })}
+                            value={formData.nationalityName}
+                            onChange={(e) => setFormData({ ...formData, nationalityName: e.target.value })}
                           />
-                          {errors.designationName && <span className="invalid">{errors.designationName.message}</span>}
+                          {errors.nationalityName && <span className="invalid">{errors.nationalityName.message}</span>}
                         </div>
                       </div>
                     </Col>
@@ -354,4 +348,4 @@ const Designation = () => {
   );
 };
 
-export default Designation;
+export default Nationality;

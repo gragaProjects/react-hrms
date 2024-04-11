@@ -21,13 +21,14 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import classNames from "classnames";
 
-const Country = () => {
+const Currency = () => {
   const [sm, updateSm] = useState(false);
   const [dataTableData, setDataTableData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredData, setFilteredData] = useState([]);
   const [formData, setFormData] = useState({
-    countryName: ''
+    currencyName: '',
+    currencySymbol: ''
   });
   const [view, setView] = useState({
     edit: false,
@@ -53,7 +54,8 @@ const Country = () => {
 
   const resetForm = () => {
     setFormData({
-      countryName: ''
+      currencyName: '',
+      currencySymbol: ''
     });
     reset({});
   };
@@ -63,60 +65,53 @@ const Country = () => {
     try {
       const isValid = await trigger();
       if (isValid) {
-        const response = await axios.post('/country/add', formData);
+        const response = await axios.post('/currency/add', formData);
         resetForm();
         setDataTableData([...dataTableData, response.data]);
-        toast.success('Country added successfully', { position: "top-right" });
+        toast.success('Currency added successfully', { position: "top-right" });
         setView({ ...view, add: false });
       } else {
         console.log('Form validation failed');
       }
     } catch (error) {
-      console.error('Error adding country:', error);
-     // toast.error('Error adding country');
-     toast.error(error.response.data.message);
+      console.error('Error adding currency:', error);
+      toast.error(error.response.data.message);
     }
   };
 
   const onEditClick = (cellData) => {
     resetForm();
-    // Fetch the data for the cellData from dataTableData and set it to the formData state
     const editedData = dataTableData.find(item => item._id === cellData);
-    //console.log(editedData);
     setFormData(editedData);
     setView({ ...view, edit: true });
   };
 
   const handleUpdate = async () => {
     try {
-      const response = await axios.put(`/country/update/${formData._id}`, formData);
-      toast.success('Country updated successfully', { position: "top-right" });
-
-      // Update the dataTableData state with the updated country data
+      const response = await axios.put(`/currency/update/${formData._id}`, formData);
+      toast.success('Currency updated successfully', { position: "top-right" });
       setDataTableData(dataTableData.map(item => {
         if (item._id === formData._id) {
-          return formData; // Update the data for the edited country
+          return formData;
         }
         return item;
       }));
-
       resetForm();
       setView({ ...view, edit: false });
-
     } catch (error) {
-      console.error('Error updating country:', error);
-      toast.error('Error updating country');
+      console.error('Error updating currency:', error);
+      toast.error('Error updating currency');
     }
   };
 
-  const deleteCountry = async (id) => {
+  const deleteCurrency = async (id) => {
     try {
-      await axios.delete(`/country/delete/${id}`);
-      toast.success('Country deleted successfully', { position: "top-right" });
+      await axios.delete(`/currency/delete/${id}`);
+      toast.success('Currency deleted successfully', { position: "top-right" });
       setDataTableData(dataTableData.filter(item => item._id !== id));
     } catch (error) {
-      console.error('Error deleting country:', error);
-      toast.error('Error deleting country');
+      console.error('Error deleting currency:', error);
+      toast.error('Error deleting currency');
     }
   };
 
@@ -132,7 +127,7 @@ const Country = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/country/get');
+        const response = await axios.get('/currency/get');
         setDataTableData(response.data);
         setLoading(false);
       } catch (error) {
@@ -156,7 +151,7 @@ const Country = () => {
         <Button className="btn-round btn-icon" color="danger" size="sm"
           onClick={(ev) => {
             ev.preventDefault();
-            deleteCountry(cellData);
+            deleteCurrency(cellData);
           }}>
           <Icon name="trash" />
         </Button>
@@ -173,13 +168,18 @@ const Country = () => {
     },
     {
       name: 'S.No.',
-      selector:  (row, index) => startIndex + index + 1,//(row, index) => index + 1,
+      selector:  (row, index) => startIndex + index + 1,
       sortable: false,
       width: '200px'
     },
     {
-      name: 'Country Name',
-      selector: (row) => row.countryName,
+      name: 'Currency Name',
+      selector: (row) => row.currencyName,
+      sortable: true
+    },
+    {
+      name: 'Currency Symbol',
+      selector: (row) => row.currencySymbol,
       sortable: true
     }
   ];
@@ -207,30 +207,23 @@ const Country = () => {
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
   };
-       //--------------pagenation-------------------
-   // Function to handle page change
-   const handlePageChange = (page) => {
-    // Adjust the page index since it starts from 0
+  
+  // Pagination
+  const handlePageChange = (page) => {
     setCurrentPage(page);
   };
   
-  // Calculate the index range based on current page and items per page
   const startIndex = (currentPage - 1) * itemPerPage;
   const endIndex = Math.min(startIndex + itemPerPage, dataTableData.length);
-  
-  // Slice the data array to get the data for the current page
   const dataForCurrentPage = dataTableData.slice(startIndex, endIndex);
   
-  
-      //--------------pagenation-------------------
-    
   return <>
-    <Head title="Countries"></Head>
+    <Head title="Currencies"></Head>
     <Content>
       <BlockHead size="sm">
         <BlockBetween>
           <BlockHeadContent>
-            <BlockTitle>Countries</BlockTitle>
+            <BlockTitle>Currencies</BlockTitle>
           </BlockHeadContent>
           <BlockHeadContent>
             <div className="toggle-wrap nk-block-tools-toggle">
@@ -246,7 +239,7 @@ const Country = () => {
                   <li className="nk-block-tools-opt">
                     <Button color="primary" onClick={() => setView({ ...view, add: true })}>
                       <Icon name="plus"></Icon>
-                      <span>Add Country</span>
+                      <span>Add Currency</span>
                     </Button>
                   </li>
                 </ul>
@@ -271,39 +264,26 @@ const Country = () => {
               </Col>
             </div>
           </Col>
-          {/* <DataTable
-            title=""
+          <DataTable
+            title="" 
             columns={dataTableColumns}
-            data={searchText ? filteredData : dataTableData}
+            data={searchText ? filteredData : dataForCurrentPage}
             pagination
             paginationServer
             paginationTotalRows={searchText ? filteredData.length : dataTableData.length}
+            paginationPerPage={itemPerPage}
+            paginationComponentOptions={{
+              rowsPerPageText: 'Items per page:',
+              rangeSeparatorText: 'of',
+              selectAllRowsItem: false,
+              selectAllRowsItemText: 'All'
+            }}
+            onChangePage={handlePageChange}
             highlightOnHover
             striped
             progressPending={loading}
             progressComponent={<p>Loading...</p>}
-          /> */}
-               <DataTable
-                title="" // User Data
-                columns={dataTableColumns}
-                data={searchText ? filteredData : dataForCurrentPage}
-                pagination
-                paginationServer
-                paginationTotalRows={searchText ? filteredData.length : dataTableData.length}
-                paginationPerPage={itemPerPage} // Set the number of items per page
-                paginationComponentOptions={{
-                rowsPerPageText: 'Items per page:',
-                rangeSeparatorText: 'of',
-                selectAllRowsItem: false,
-                selectAllRowsItemText: 'All'
-                }}
-                onChangePage={handlePageChange} // Handle page change event
-                highlightOnHover
-                striped
-                progressPending={loading}
-                progressComponent={<p>Loading...</p>}
-                />
-    
+          />
           <ToastContainer />
         </PreviewCard>
       </Block>
@@ -317,24 +297,41 @@ const Country = () => {
             <Icon name="cross-sm"></Icon>
           </a>
           <div className="p-2">
-            <h5 className="title">{view.edit ? 'Update' : 'Add'} Country</h5>
+            <h5 className="title">{view.edit ? 'Update' : 'Add'} Currency</h5>
             <div className="mt-4">
               <Form className={formClass} onSubmit={view.edit ? handleUpdate : handleSubmit}>
                 <Row className="g-3">
                   <Col md="6">
                     <div className="form-group">
-                      <label className="form-label" htmlFor="countryName">
-                        Country Name <span  className="error">*</span>
+                      <label className="form-label" htmlFor="currencyName">
+                        Currency Name <span  className="error">*</span>
                       </label>
                       <div className="form-control-wrap">
                         <input
                           type="text"
-                          {...register('countryName', { required: "This field is required" })}
+                          {...register('currencyName', { required: "This field is required" })}
                           className="form-control"
-                          value={formData.countryName}
-                          onChange={(e) => setFormData({ ...formData, countryName: e.target.value })}
+                          value={formData.currencyName}
+                          onChange={(e) => setFormData({ ...formData, currencyName: e.target.value })}
                         />
-                        {errors.countryName && <span className="invalid">{errors.countryName.message}</span>}
+                        {errors.currencyName && <span className="invalid">{errors.currencyName.message}</span>}
+                      </div>
+                    </div>
+                  </Col>
+                  <Col md="6">
+                    <div className="form-group">
+                      <label className="form-label" htmlFor="currencySymbol">
+                        Currency Symbol <span  className="error">*</span>
+                      </label>
+                      <div className="form-control-wrap">
+                        <input
+                          type="text"
+                          {...register('currencySymbol', { required: "This field is required" })}
+                          className="form-control"
+                          value={formData.currencySymbol}
+                          onChange={(e) => setFormData({ ...formData, currencySymbol: e.target.value })}
+                        />
+                        {errors.currencySymbol && <span className="invalid">{errors.currencySymbol.message}</span>}
                       </div>
                     </div>
                   </Col>
@@ -373,4 +370,4 @@ const Country = () => {
   </>;
 };
 
-export default Country;
+export default Currency;
