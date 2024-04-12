@@ -295,7 +295,7 @@ const Departments = () => {
   return <>
     <Head title="Departments"></Head>
     <Content>
-      <BlockHead size="sm">
+      {/* <BlockHead size="sm">
         <BlockBetween>
           <BlockHeadContent>
             <BlockTitle>Departments</BlockTitle>
@@ -322,8 +322,22 @@ const Departments = () => {
             </div>
           </BlockHeadContent>
         </BlockBetween>
-      </BlockHead>
-  
+      </BlockHead> */}
+      <BlockHead size="sm" style={{ marginTop: "50px" }}>
+    <BlockBetween>
+      <BlockHeadContent>
+        <BlockTitle>Departments</BlockTitle>
+      </BlockHeadContent>
+      <BlockHeadContent>
+        <Button color="primary" onClick={() => setView({ ...view, add: true })}>
+          <Icon name="plus"></Icon>
+          <span>Add Department</span>
+        </Button>
+      </BlockHeadContent>
+    </BlockBetween>
+  </BlockHead>
+
+
       <Block size="lg">
         <PreviewCard>
           <Col size="12" >

@@ -299,7 +299,20 @@ const City = () => {
   return <>
     <Head title="Cities"></Head>
     <Content>
-      <BlockHead size="sm">
+    <BlockHead size="sm" style={{ marginTop: "50px" }}>
+    <BlockBetween>
+      <BlockHeadContent>
+        <BlockTitle>Cities</BlockTitle>
+      </BlockHeadContent>
+      <BlockHeadContent>
+        <Button color="primary" onClick={() => setView({ ...view, add: true })}>
+          <Icon name=""></Icon>
+          <span>Add City</span>
+        </Button>
+      </BlockHeadContent>
+    </BlockBetween>
+  </BlockHead>
+      {/* <BlockHead size="sm">
         <BlockBetween>
           <BlockHeadContent>
             <BlockTitle>Cities</BlockTitle>
@@ -326,7 +339,7 @@ const City = () => {
             </div>
           </BlockHeadContent>
         </BlockBetween>
-      </BlockHead>
+      </BlockHead> */}
 
       <Block size="lg">
         <PreviewCard>

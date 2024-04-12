@@ -213,7 +213,20 @@ const Education = () => {
   return <>
     <Head title="Education"></Head>
     <Content>
-      <BlockHead size="sm">
+    <BlockHead size="sm" style={{ marginTop: "50px" }}>
+    <BlockBetween>
+      <BlockHeadContent>
+        <BlockTitle>Education</BlockTitle>
+      </BlockHeadContent>
+      <BlockHeadContent>
+        <Button color="primary" onClick={() => setView({ ...view, add: true })}>
+          <Icon name=""></Icon>
+          <span>Add Education</span>
+        </Button>
+      </BlockHeadContent>
+    </BlockBetween>
+  </BlockHead>
+      {/* <BlockHead size="sm">
         <BlockBetween>
           <BlockHeadContent>
             <BlockTitle>Education</BlockTitle>
@@ -240,7 +253,7 @@ const Education = () => {
             </div>
           </BlockHeadContent>
         </BlockBetween>
-      </BlockHead>
+      </BlockHead> */}
 
       <Block size="lg">
         <PreviewCard>

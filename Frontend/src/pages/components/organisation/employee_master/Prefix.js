@@ -220,7 +220,20 @@ const Prefix = () => {
     <>
       <Head title="Prefixes" />
       <Content>
-        <BlockHead size="sm">
+      <BlockHead size="sm" style={{ marginTop: "50px" }}>
+    <BlockBetween>
+      <BlockHeadContent>
+        <BlockTitle>Prefixes</BlockTitle>
+      </BlockHeadContent>
+      <BlockHeadContent>
+        <Button color="primary" onClick={() => setView({ ...view, add: true })}>
+          <Icon name=""></Icon>
+          <span>Add Prefixe</span>
+        </Button>
+      </BlockHeadContent>
+    </BlockBetween>
+  </BlockHead>
+        {/* <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
               <BlockTitle>Prefixes</BlockTitle>
@@ -247,7 +260,7 @@ const Prefix = () => {
               </div>
             </BlockHeadContent>
           </BlockBetween>
-        </BlockHead>
+        </BlockHead> */}
 
         <Block size="lg">
           <PreviewCard>

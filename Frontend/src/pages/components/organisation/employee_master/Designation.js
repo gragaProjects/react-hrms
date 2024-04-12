@@ -220,7 +220,20 @@ const Designation = () => {
     <>
       <Head title="Designations" />
       <Content>
-        <BlockHead size="sm">
+      <BlockHead size="sm" style={{ marginTop: "50px" }}>
+    <BlockBetween>
+      <BlockHeadContent>
+        <BlockTitle>Designations</BlockTitle>
+      </BlockHeadContent>
+      <BlockHeadContent>
+        <Button color="primary" onClick={() => setView({ ...view, add: true })}>
+          <Icon name=""></Icon>
+          <span>Add Designation</span>
+        </Button>
+      </BlockHeadContent>
+    </BlockBetween>
+  </BlockHead>
+        {/* <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
               <BlockTitle>Designations</BlockTitle>
@@ -247,7 +260,7 @@ const Designation = () => {
               </div>
             </BlockHeadContent>
           </BlockBetween>
-        </BlockHead>
+        </BlockHead> */}
 
         <Block size="lg">
           <PreviewCard>

@@ -213,7 +213,20 @@ const GovernmentID = () => {
   return <>
     <Head title="Government IDs"></Head>
     <Content>
-      <BlockHead size="sm">
+    <BlockHead size="sm" style={{ marginTop: "50px" }}>
+    <BlockBetween>
+      <BlockHeadContent>
+        <BlockTitle>Government IDs</BlockTitle>
+      </BlockHeadContent>
+      <BlockHeadContent>
+        <Button color="primary" onClick={() => setView({ ...view, add: true })}>
+          <Icon name=""></Icon>
+          <span>Add Government ID</span>
+        </Button>
+      </BlockHeadContent>
+    </BlockBetween>
+  </BlockHead>
+      {/* <BlockHead size="sm">
         <BlockBetween>
           <BlockHeadContent>
             <BlockTitle>Government IDs</BlockTitle>
@@ -240,7 +253,7 @@ const GovernmentID = () => {
             </div>
           </BlockHeadContent>
         </BlockBetween>
-      </BlockHead>
+      </BlockHead> */}
 
       <Block size="lg">
         <PreviewCard>

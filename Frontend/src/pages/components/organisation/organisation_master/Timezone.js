@@ -220,7 +220,20 @@ const TimeZone = () => {
   return <>
     <Head title="Time Zones"></Head>
     <Content>
-      <BlockHead size="sm">
+    <BlockHead size="sm" style={{ marginTop: "50px" }}>
+    <BlockBetween>
+      <BlockHeadContent>
+        <BlockTitle>Time Zones</BlockTitle>
+      </BlockHeadContent>
+      <BlockHeadContent>
+        <Button color="primary" onClick={() => setView({ ...view, add: true })}>
+          <Icon name=""></Icon>
+          <span>Add Time Zone</span>
+        </Button>
+      </BlockHeadContent>
+    </BlockBetween>
+  </BlockHead>
+      {/* <BlockHead size="sm">
         <BlockBetween>
           <BlockHeadContent>
             <BlockTitle>Time Zones</BlockTitle>
@@ -247,7 +260,7 @@ const TimeZone = () => {
             </div>
           </BlockHeadContent>
         </BlockBetween>
-      </BlockHead>
+      </BlockHead> */}
 
       <Block size="lg">
         <PreviewCard>

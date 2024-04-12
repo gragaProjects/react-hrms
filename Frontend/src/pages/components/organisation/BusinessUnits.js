@@ -533,7 +533,7 @@ const dataForCurrentPage = dataTableData.slice(startIndex, endIndex);
   return <>
     <Head title="Business Units"></Head>
     <Content>
-      <BlockHead size="sm">
+      {/* <BlockHead size="sm">
         <BlockBetween>
           <BlockHeadContent>
             <BlockTitle>Business Units</BlockTitle>
@@ -567,7 +567,7 @@ const dataForCurrentPage = dataTableData.slice(startIndex, endIndex);
                     <li className="nk-block-tools-opt" onClick={() => setView({ ...view, add: true })}
 
                     >
-                      {/* onClick={(ev) => { ev.preventDefault(); toggle("add"); }} */}
+                     
                     <Button color="primary">
                       <Icon name="plus"></Icon>
                       <span>Add Business unit</span>
@@ -580,8 +580,24 @@ const dataForCurrentPage = dataTableData.slice(startIndex, endIndex);
             </div>
           </BlockHeadContent>
         </BlockBetween>
-      </BlockHead>
-  
+      </BlockHead> */}
+
+
+      <BlockHead size="sm" style={{ marginTop: "50px" }}>
+      <BlockBetween>
+        <BlockHeadContent>
+          <BlockTitle>Business Units</BlockTitle>
+        </BlockHeadContent>
+        <BlockHeadContent>
+          <Button color="primary" onClick={() => setView({ ...view, add: true })}>
+            <Icon name="plus"></Icon>
+            <span>Add Business unit</span>
+          </Button>
+        </BlockHeadContent>
+      </BlockBetween>
+    </BlockHead>
+
+
   {/* Data table */}
       <Block size="lg">
           <BlockHead>

@@ -34,7 +34,7 @@ const Homepage = () => {
               </BlockDes>
             </BlockHeadContent>
             <BlockHeadContent>
-              <div className="toggle-wrap nk-block-tools-toggle">
+              {/* <div className="toggle-wrap nk-block-tools-toggle">
                 <Button
                   className={`btn-icon btn-trigger toggle-expand me-n1 ${sm ? "active" : ""}`}
                   onClick={() => updateSm(!sm)}
@@ -42,7 +42,7 @@ const Homepage = () => {
                   <Icon name="more-v" />
                 </Button>
               
-              </div>
+              </div> */}
             </BlockHeadContent>
           </BlockBetween>
         </BlockHead>

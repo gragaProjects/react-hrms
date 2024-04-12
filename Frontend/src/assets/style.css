@@ -8,3 +8,7 @@
 .select-search-container:not(.select-search-is-disabled) .select-search-input:hover {
     border-color: unset !important;
 }
+
+.nk-header-fixed + .nk-content{
+    margin-top: 100px !important;
+}

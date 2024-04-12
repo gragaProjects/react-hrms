@@ -327,7 +327,7 @@ const OrganisationInfo = () => {
           <BlockHeadContent>
             <BlockTitle>Organisation Info</BlockTitle>
           </BlockHeadContent>
-          <BlockHeadContent>
+          {/* <BlockHeadContent>
             <div className="toggle-wrap nk-block-tools-toggle">
               <a
                 href="#more"
@@ -341,7 +341,7 @@ const OrganisationInfo = () => {
               </a>
               
             </div>
-          </BlockHeadContent>
+          </BlockHeadContent> */}
         </BlockBetween>
       </BlockHead>
       <Block>

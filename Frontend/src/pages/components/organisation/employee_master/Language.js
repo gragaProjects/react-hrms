@@ -225,7 +225,20 @@ const Language = () => {
   return <>
     <Head title="Languages"></Head>
     <Content>
-      <BlockHead size="sm">
+    <BlockHead size="sm" style={{ marginTop: "50px" }}>
+    <BlockBetween>
+      <BlockHeadContent>
+        <BlockTitle>Languages</BlockTitle>
+      </BlockHeadContent>
+      <BlockHeadContent>
+        <Button color="primary" onClick={() => setView({ ...view, add: true })}>
+          <Icon name=""></Icon>
+          <span>Add Language</span>
+        </Button>
+      </BlockHeadContent>
+    </BlockBetween>
+  </BlockHead>
+      {/* <BlockHead size="sm">
         <BlockBetween>
           <BlockHeadContent>
             <BlockTitle>Languages</BlockTitle>
@@ -252,7 +265,7 @@ const Language = () => {
             </div>
           </BlockHeadContent>
         </BlockBetween>
-      </BlockHead>
+      </BlockHead> */}
 
       <Block size="lg">
         <PreviewCard>
